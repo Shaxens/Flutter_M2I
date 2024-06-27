@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tintin/models/album.dart';
+import 'package:tintin/providers/reading_list_provider.dart';
 
 class AlbumDetails extends StatelessWidget {
   final Album album;
-  final Function(int) onToggleReadingList;
 
-  const AlbumDetails(
-      {super.key, required this.album, required this.onToggleReadingList});
+  const AlbumDetails({super.key, required this.album});
 
   @override
   Widget build(BuildContext context) {
+    final readingListProvider = Provider.of<ReadingListProvider>(context);
+    final isInReadingList = readingListProvider.isInReadingList(album.numero);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(album.title),
@@ -45,7 +48,11 @@ class AlbumDetails extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          onToggleReadingList(album.numero);
+          if (isInReadingList) {
+            readingListProvider.removeAlbum(album.numero);
+          } else {
+            readingListProvider.addAlbum(album.numero);
+          }
           Navigator.pop(context);
         },
         backgroundColor: Colors.lightBlue,
