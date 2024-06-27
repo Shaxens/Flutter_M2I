@@ -12,16 +12,6 @@ class AlbumMaster extends StatefulWidget {
 }
 
 class _AlbumMasterState extends State<AlbumMaster> {
-  List<Album> _readingList = [];
-
-  void toggleReadingList(Album album) {
-    if (_readingList.contains(album)) {
-      _readingList.remove(album);
-    } else {
-      _readingList.add(album);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,17 +40,11 @@ class _AlbumMasterState extends State<AlbumMaster> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AlbumDetails(
-                          album: data[index],
-                          onToggleReadingList: toggleReadingList,
-                        ),
+                        builder: (context) => AlbumDetails(album: data[index]),
                       ),
                     );
                   },
-                  child: AlbumPreview(
-                    album: data[index],
-                    isInReadingList: _readingList.contains(data[index]),
-                  ),
+                  child: AlbumPreview(album: data[index]),
                 );
               },
             );

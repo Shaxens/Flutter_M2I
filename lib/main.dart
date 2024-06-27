@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tintin/providers/reading_list_provider.dart';
 import 'package:tintin/screens/albums_master.dart';
+import 'package:tintin/themes/dark_theme.dart';
+import 'package:tintin/themes/light_theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ReadingListProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,10 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Tintin',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppThemeLight.themeData,
+      darkTheme: AppThemeDark.themeData,
+      themeMode: ThemeMode.system,
       home: const AlbumMaster(),
     );
   }
