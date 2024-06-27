@@ -26,9 +26,9 @@ class AlbumDetails extends StatelessWidget {
               'Album n° : ${album.numero}',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            Padding(padding: EdgeInsets.all(16.0)),
+            const Padding(padding: EdgeInsets.all(16.0)),
             Text('Résumé : ${album.resume}'),
-            Padding(padding: EdgeInsets.all(32.0)),
+            const Padding(padding: EdgeInsets.all(32.0)),
             Text(
               'Année de parution : ${album.year}',
             ),
@@ -38,7 +38,7 @@ class AlbumDetails extends StatelessWidget {
               ),
             ],
             if (album.image.isNotEmpty) ...[
-              Padding(padding: EdgeInsets.all(8.0)),
+              const Padding(padding: EdgeInsets.all(8.0)),
               Image.asset(
                 album.image,
                 height: 300,
