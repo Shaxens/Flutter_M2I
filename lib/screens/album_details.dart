@@ -20,29 +20,31 @@ class AlbumDetails extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (album.image.isNotEmpty) ...[
-              Image.asset(
-                album.image,
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(height: 16.0),
-            ],
             Text(
-              'Numéro: ${album.numero}',
+              'Album n° : ${album.numero}',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8.0),
-            Text('Année de parution: ${album.year}'),
+            Padding(padding: EdgeInsets.all(16.0)),
+            Text('Résumé : ${album.resume}'),
+            Padding(padding: EdgeInsets.all(32.0)),
+            Text(
+              'Année de parution : ${album.year}',
+            ),
             if (album.yearInColor != null) ...[
-              const SizedBox(height: 8.0),
-              Text('Année de parution en couleur: ${album.yearInColor}'),
+              Text(
+                'Année de parution en couleur : ${album.yearInColor}',
+              ),
             ],
-            const SizedBox(height: 16.0),
-            Text(album.resume),
+            if (album.image.isNotEmpty) ...[
+              Padding(padding: EdgeInsets.all(8.0)),
+              Image.asset(
+                album.image,
+                height: 300,
+                fit: BoxFit.cover,
+              ),
+            ],
           ],
         ),
       ),
