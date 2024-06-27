@@ -14,7 +14,7 @@ class AlbumPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: isInReadingList ? Colors.amber : Colors.white,
+      color: isInReadingList ? Colors.lightBlue[50] : Colors.white,
       child: ListTile(
         title: Text(album.title),
         leading: SizedBox(
@@ -26,6 +26,10 @@ class AlbumPreview extends StatelessWidget {
                 ? const Icon(Icons.image_not_supported_outlined)
                 : null,
           ),
+        ),
+        trailing: Icon(
+          isInReadingList ? Icons.playlist_add_check : Icons.search,
+          color: isInReadingList ? Colors.blue : null,
         ),
       ),
     );

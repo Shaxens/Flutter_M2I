@@ -12,14 +12,15 @@ class AlbumMaster extends StatefulWidget {
 }
 
 class _AlbumMasterState extends State<AlbumMaster> {
-  List<Album> _readingList = [];
+  List<int> _readingList = [];
 
-  void toggleReadingList(Album album) {
-    if (_readingList.contains(album)) {
-      _readingList.remove(album);
+  void toggleReadingList(int albumId) {
+    if (_readingList.contains(albumId)) {
+      _readingList.remove(albumId);
     } else {
-      _readingList.add(album);
+      _readingList.add(albumId);
     }
+    setState(() {});
   }
 
   @override
@@ -59,7 +60,7 @@ class _AlbumMasterState extends State<AlbumMaster> {
                   },
                   child: AlbumPreview(
                     album: data[index],
-                    isInReadingList: _readingList.contains(data[index]),
+                    isInReadingList: _readingList.contains(data[index].numero),
                   ),
                 );
               },

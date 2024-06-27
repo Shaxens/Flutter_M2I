@@ -3,7 +3,7 @@ import 'package:tintin/models/album.dart';
 
 class AlbumDetails extends StatelessWidget {
   final Album album;
-  final Function(Album) onToggleReadingList;
+  final Function(int) onToggleReadingList;
 
   const AlbumDetails(
       {super.key, required this.album, required this.onToggleReadingList});
@@ -45,7 +45,7 @@ class AlbumDetails extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          onToggleReadingList(album);
+          onToggleReadingList(album.numero);
           Navigator.pop(context);
         },
         backgroundColor: Colors.lightBlue,
