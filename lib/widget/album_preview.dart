@@ -13,13 +13,24 @@ class AlbumPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Consumer<ReadingListProvider>(
       builder: (context, provider, _) => Card(
         color: provider.isInReadingList(album.numero)
-            ? Colors.lightBlue[50]
-            : Colors.white,
+            ? theme.colorScheme.secondary
+            : theme.cardTheme.color,
         child: ListTile(
-          title: Text(album.title),
+          tileColor: provider.isInReadingList(album.numero)
+              ? theme.colorScheme.secondary
+              : theme.colorScheme.onPrimary,
+          title: Text(
+            album.title,
+            style: TextStyle(
+              color: provider.isInReadingList(album.numero)
+                  ? theme.colorScheme.onSecondary
+                  : theme.textTheme.bodyLarge!.color,
+            ),
+          ),
           leading: SizedBox(
             height: 100,
             child: CircleAvatar(
@@ -34,7 +45,9 @@ class AlbumPreview extends StatelessWidget {
             icon: Icon(provider.isInReadingList(album.numero)
                 ? Icons.playlist_add_check
                 : Icons.search),
-            color: provider.isInReadingList(album.numero) ? Colors.blue : null,
+            color: provider.isInReadingList(album.numero)
+                ? theme.colorScheme.onSecondary
+                : null,
             onPressed: () {
               if (provider.isInReadingList(album.numero)) {
                 provider.removeAlbum(album.numero);
