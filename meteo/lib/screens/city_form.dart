@@ -108,6 +108,19 @@ class _CityFormState extends State<CityForm> {
                                 urlTemplate:
                                     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                               ),
+                              MarkerLayer(
+                                markers: [
+                                  Marker(
+                                    point: LatLng(
+                                        data.weatherData['coord']['lat'],
+                                        data.weatherData['coord']['lon']),
+                                    child: const Icon(
+                                      Icons.location_pin,
+                                      color: Colors.red,
+                                    ),
+                                  )
+                                ],
+                              )
                             ],
                           ),
                         )
