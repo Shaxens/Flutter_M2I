@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:meteo/datas/city_data.dart';
-import 'package:meteo/datas/weather_data.dart';
-import 'package:meteo/services/city_api_service.dart';
-import 'package:meteo/services/weather_api_service.dart';
-import 'package:meteo/widgets/weather_display.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather_pro_app/datas/city_data.dart';
+import 'package:weather_pro_app/datas/weather_data.dart';
+import 'package:weather_pro_app/services/city_api_service.dart';
+import 'package:weather_pro_app/services/weather_api_service.dart';
+import 'package:weather_pro_app/widgets/weather_display.dart';
 
 class CityFormPage extends StatelessWidget {
   const CityFormPage({super.key});

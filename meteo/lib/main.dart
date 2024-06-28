@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:meteo/screens/city_form.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:weather_pro_app/screens/city_form.dart';
 
 void main() async {
   await dotenv.load(fileName: "../config/.env");
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const MainApp());
+  FlutterNativeSplash.remove();
 }
 
 class MainApp extends StatelessWidget {
@@ -13,7 +17,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Météo',
+      title: 'Weather App Pro',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
