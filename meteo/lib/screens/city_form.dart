@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:meteo/datas/weather_data.dart';
 import 'package:meteo/services/city_api_service.dart';
 import 'package:meteo/services/weather_api_service.dart';
 import 'package:meteo/widgets/weather_display.dart';
+import 'package:latlong2/latlong.dart';
 
 class CityFormPage extends StatelessWidget {
   const CityFormPage({super.key});
@@ -28,9 +31,10 @@ class _CityFormState extends State<CityForm> {
   final CityService _cityService = CityService();
   final WeatherService _weatherService = WeatherService();
   final TextEditingController _cityController = TextEditingController();
+  final MapController _mapController = MapController();
   String _cityName = '';
   bool _loading = false;
-  Future<Map<String, dynamic>>? _weatherFuture;
+  Future<WeatherData>? _weatherFuture;
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +69,10 @@ class _CityFormState extends State<CityForm> {
             ),
             const SizedBox(height: 16.0),
             if (_weatherFuture != null)
-              FutureBuilder<Map<String, dynamic>>(
+              FutureBuilder<WeatherData>(
                 future: _weatherFuture,
                 builder: (BuildContext context,
-                    AsyncSnapshot<Map<String, dynamic>> snapshot) {
+                    AsyncSnapshot<WeatherData> snapshot) {
                   if (snapshot.hasError) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -83,10 +87,32 @@ class _CityFormState extends State<CityForm> {
                     return Container();
                   } else if (snapshot.hasData) {
                     final data = snapshot.data!;
-                    return WeatherDisplay(
-                      cityName: data['cityName'] ?? '',
-                      country: data['country'] ?? '',
-                      temperature: data['temperature'] ?? 0.0,
+                    return Column(
+                      children: [
+                        WeatherDisplay(
+                          cityName: data.cityCoordinates['name'] ?? '',
+                          country: data.cityCoordinates['country'] ?? '',
+                          temperature: data.weatherData['main']['temp'] ?? 0.0,
+                        ),
+                        SizedBox(
+                          height: 600,
+                          width: 400,
+                          child: FlutterMap(
+                            options: MapOptions(
+                              initialCenter: LatLng(
+                                  data.weatherData['coord']['lat'],
+                                  data.weatherData['coord']['lon']),
+                              initialZoom: 12,
+                            ),
+                            children: [
+                              TileLayer(
+                                urlTemplate:
+                                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     );
                   } else {
                     return Container();
@@ -102,11 +128,11 @@ class _CityFormState extends State<CityForm> {
   void _onSearchPressed() {
     setState(() {
       _loading = true;
-      _weatherFuture = _fetchWeather();
+      _weatherFuture = _fetchWeather() as Future<WeatherData>?;
     });
   }
 
-  Future<Map<String, dynamic>> _fetchWeather() async {
+  Future<WeatherData> _fetchWeather() async {
     setState(() {
       _loading = true;
     });
@@ -120,11 +146,8 @@ class _CityFormState extends State<CityForm> {
         _loading = false;
       });
 
-      return {
-        'cityName': cityCoordinates['name'],
-        'country': cityCoordinates['country'],
-        'temperature': weatherData['main']['temp'],
-      };
+      return WeatherData(
+          cityCoordinates: cityCoordinates, weatherData: weatherData);
     } catch (e) {
       setState(() {
         _loading = false;
