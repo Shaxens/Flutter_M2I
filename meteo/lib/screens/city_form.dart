@@ -70,13 +70,17 @@ class _CityFormState extends State<CityForm> {
                 builder: (BuildContext context,
                     AsyncSnapshot<Map<String, dynamic>> snapshot) {
                   if (snapshot.hasError) {
-                    return SnackBar(
-                      content: const Text('Yay! A SnackBar!'),
-                      action: SnackBarAction(
-                        label: 'Undo',
-                        onPressed: () {},
-                      ),
-                    );
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Erreur: ${snapshot.error}',
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      );
+                    });
+                    return Container();
                   } else if (snapshot.hasData) {
                     final data = snapshot.data!;
                     return WeatherDisplay(
