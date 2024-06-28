@@ -25,7 +25,6 @@ class WeatherService {
             'Erreur lors de la récupération des données météorologiques');
       }
     } catch (e) {
-      print(e);
       throw ('Erreur : $e');
     }
   }

@@ -31,7 +31,6 @@ class _CityFormState extends State<CityForm> {
   final CityService _cityService = CityService();
   final WeatherService _weatherService = WeatherService();
   final TextEditingController _cityController = TextEditingController();
-  final MapController _mapController = MapController();
   String _cityName = '';
   bool _loading = false;
   Future<WeatherData>? _weatherFuture;
